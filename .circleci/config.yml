@@ -1,22 +1,26 @@
 version: 2.1
 # Use a package of configuration called an orb.
   # Choose either one of the orbs below
+orbs:
+  # Choose either one of the orbs below
+  # Declare a dependency on the welcome-orb
   # welcome: circleci/welcome-orb@0.4.1
-  # aws-cli: circleci/aws-cli@2.0.3
+  aws-cli: circleci/aws-cli@2.0.3  
+
 # Define the jobs we want to run for this project
 jobs:
   create_infrastructure:
-      docker:
-        - image: amazon/aws-cli
-      steps:
-        - checkout
-        - run:
-            name: Create Cloudformation Stack
-            command: |
-              aws cloudformation deploy \
-                --template-file template.yml \
-                --stack-name myStack2-${CIRCLE_WORKFLOW_ID:0:5} \
-                --region us-east-1      
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Create Cloudformation Stack
+          command: |
+            aws cloudformation deploy \
+            --template-file template.yml \
+            --stack-name myStack2-${CIRCLE_WORKFLOW_ID:0:5} \
+            --region us-east-1      
 # Sequential workflow
 workflows:
   # Name the workflow
